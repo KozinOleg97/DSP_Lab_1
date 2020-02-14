@@ -1,9 +1,13 @@
 package ru.rsatu;
 
 
+import org.apache.poi.ss.usermodel.Workbook;
+
 public class Main {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
+
+        Features features = new Features();
 
         OneDHaar oneDHaar = new OneDHaar();
 
@@ -15,6 +19,14 @@ public class Main {
 
         oneDHaar.inPlaceFastInverseHaarWaveletTransform(oneDHaar.transformResult.get(oneDHaar.transformResult.size() - 1));
 
+        ExcelHandler excelHandler = new ExcelHandler();
+        Workbook newWb = excelHandler.createNewWb();
+
+        newWb = excelHandler.addList(newWb, oneDHaar.transformResult, 0);
+
+        newWb = excelHandler.addList(newWb, oneDHaar.reverseTransformApproximation, 1);
+
+        excelHandler.saveWbToFile(newWb, " Отчёт " + features.getCurTimeStr());
 
 
     }
